@@ -11,6 +11,22 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import requests
+import json
+
+def get_external_ip():
+    endpoint = 'https://ipinfo.io/json'
+    response = requests.get(endpoint, verify = True)
+
+    if response.status_code != 200:
+        return 'Status:', response.status_code, 'Problem with the request. Exiting.'
+        exit()
+
+    data = response.json()
+
+    return data['ip']
+
+PUBLIC_IP = get_external_ip()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +41,7 @@ SECRET_KEY = 'django-insecure-bmd&4#tuy@s99_#qc8#c=*4!*(t!rzhhe9hqnn8^v2(g6qzp#c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [PUBLIC_IP]
 
 
 # Application definition
