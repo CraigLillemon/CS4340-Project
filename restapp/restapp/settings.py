@@ -41,7 +41,7 @@ SECRET_KEY = 'django-insecure-bmd&4#tuy@s99_#qc8#c=*4!*(t!rzhhe9hqnn8^v2(g6qzp#c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [PUBLIC_IP]
+ALLOWED_HOSTS = [PUBLIC_IP, "127.0.0.1"]
 
 
 # Application definition
