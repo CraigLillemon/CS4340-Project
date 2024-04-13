@@ -94,7 +94,7 @@ def view_business(request):
 
     business = {
         'name' : api_response['results']['name'],
-        'location' : api_response['results']['location_string'],
+        'address' : api_response['results']['address'],
         'diets' : diet_restricts,
     }
 
