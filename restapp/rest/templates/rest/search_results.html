@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <h1>
+        Here is page {{pagenum}} of results for {{citystring}}.
+    </h1>
+</head>
+<body>
+    <form action="/search/results" method="get">
+        <label for="city">City to Search:</label><br>
+        <input type="text" name="city" class="form-control" value="{{cityname}}"" required><br>
+        <label for="page">Page Number:</label><br>
+        <input type="number" name="page" min="1" class="form-control" value="{{pagenum}}" required><br>
+        <button type="submit" class="btn">Search</button>
+    </form>
+    <form action="/search/results/business" method="get">
+        <ul>
+            {% for business in business_list %}
+            <li>
+                <p>{{business.name}}</p>
+                <button type="submit" class="btn" name="business_id" value="{{business.id}}">View this business</button>
+            </li>
+            {% endfor %}
+        </ul>
+    </form>
+</body>

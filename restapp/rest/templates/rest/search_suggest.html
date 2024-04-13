@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <h1>
+        Welcome to the search suggestions page.
+    </h1>
+</head>
+<body>
+    <form action="/search/results" method="get">
+    <label for="cities">Location Suggestions for {{citychoice}}:</label>
+        <select name="location_list">
+            {% for city in suggestion_list %}
+            <option name="location" class="form-control" value="{{city.id}}">{{city.name}}</option>
+            {% endfor %}
+        </select>
+    </form>
+</body>

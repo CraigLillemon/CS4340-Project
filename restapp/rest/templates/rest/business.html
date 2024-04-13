@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+    <h1>
+        Here is the page for {{business.name}}
+    </h1>
+    <h2>
+        Located in {{business.location}}
+    </h2>
+</head>
+<body>
+    <h3>
+        This business has the following dietary options available:
+    </h3>
+    <ul>
+        {% for diet in business.diets %}
+        <li>
+            {{diet}}
+        </li>
+        {% endfor %}
+    </ul>
+</body>

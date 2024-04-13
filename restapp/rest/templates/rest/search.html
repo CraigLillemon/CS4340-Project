@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<head>
+    <h1>
+        Welcome to the search page.
+    </h1>
+</head>
+<body>
+    {% if error_msg %}
+    <h2>Oops! We couldn't find anything for "{{error_msg}}"</h2>
+    {% endif %}
+    <form action="/search/results", method="get">
+        <input type="hidden" name="page" value="1" />
+        <input type="text" placeholder="City" name="city" class="form-control" required>
+        <button type="submit" class="btn">Search</button>
+    </form>
+</body>
