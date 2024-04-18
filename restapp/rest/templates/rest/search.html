@@ -10,7 +10,21 @@
     {% endif %}
     <form action="/search/results", method="get">
         <input type="hidden" name="page" value="1" />
-        <input type="text" placeholder="City" name="city" class="form-control" required>
+
+        <input type="text" placeholder="City" name="city" class="form-control" required><br>
+
+        <input type="radio" id="vegetarian" name="diet_restrict" value="10665">
+        <label for="vegetarian">Vegetarian</label><br>
+
+        <input type="radio" id="vegan" name="diet_restrict" value="10697">
+        <label for="vegan">Vegan</label><br>
+
+        <input type="radio" id="gluten_free" name="diet_restrict" value="10992">
+        <label for="gluten_free">Gluten Free</label><br>
+
+        <input type="radio" id="none_diet" name="diet_restrict" value="0" checked>
+        <label for="none_diet">N/A</label><br>
+
         <button type="submit" class="btn">Search</button>
     </form>
 </body>

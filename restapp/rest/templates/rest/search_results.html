@@ -3,13 +3,30 @@
     <h1>
         Here is page {{pagenum}} of results for {{citystring}}.
     </h1>
+    <h2>
+        Showing {{results}} results, ({{results_hidden}} hidden based on your preferences)
+    </h2>
 </head>
 <body>
     <form action="/search/results" method="get">
         <label for="city">City to Search:</label><br>
-        <input type="text" name="city" class="form-control" value="{{cityname}}"" required><br>
+        <input type="text" name="city" class="form-control" value="{{citystring}}" required><br>
+
+        <input type="radio" id="vegetarian" name="diet_restrict" value="10665" {{checked.10665}}>
+        <label for="vegetarian">Vegetarian</label><br>
+
+        <input type="radio" id="vegan" name="diet_restrict" value="10697" {{checked.10697}}>
+        <label for="vegan">Vegan</label><br>
+
+        <input type="radio" id="gluten_free" name="diet_restrict" value="10992" {{checked.10992}}>
+        <label for="gluten_free">Gluten Free</label><br>
+
+        <input type="radio" id="none_diet" name="diet_restrict" value="0" {{checked.0}}>
+        <label for="none_diet">N/A</label><br>
+
         <label for="page">Page Number:</label><br>
         <input type="number" name="page" min="1" class="form-control" value="{{pagenum}}" required><br>
+
         <button type="submit" class="btn">Search</button>
     </form>
     <form action="/search/results/business" method="get">
