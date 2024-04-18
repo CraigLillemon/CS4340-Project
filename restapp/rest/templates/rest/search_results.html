@@ -1,5 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=0.i5">
+    <title>Search Results for {{cityname}}</title>
+    <link rel="stylesheet" href="{% static 'rest/search_results.css' %}">
     <h1>
         Here is page {{pagenum}} of results for {{citystring}}.
     </h1>
