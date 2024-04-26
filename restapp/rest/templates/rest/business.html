@@ -19,4 +19,13 @@
         </li>
         {% endfor %}
     </ul>
+
+    <form action="/", method="post">
+        <input type="hidden" name="publisher" value="Anonymous" />
+        <input type="hidden" name="publisher" value={{business.id}} />
+
+        <input type="text" placeholder="Text for your note" name="note_text" class="form-control" required><br>
+
+        <button type="submit" class="btn">Post</button>
+    </form>
 </body>

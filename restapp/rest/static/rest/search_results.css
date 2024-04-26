@@ -6,6 +6,7 @@ font-family: "Poppins", sans-serif;
 }
 body {
 background-color: antiquewhite;
+align-items: center;
 }
 h1, h2 {
 text-align: center;
@@ -31,7 +32,7 @@ text-align: center;
 color: darkolivegreen;
 }
 button {
-width: 100%;
+width: 50%;
 background: darkolivegreen;
 border: none;
 outline: none;

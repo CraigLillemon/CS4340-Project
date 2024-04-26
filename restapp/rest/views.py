@@ -125,6 +125,7 @@ def view_business(request):
         diet_restricts.append(api_response['results']['dietary_restrictions'][i]['name'])
 
     business = {
+        'id' : str(location_id),
         'name' : api_response['results']['name'],
         'address' : api_response['results']['address'],
         'diets' : diet_restricts,
