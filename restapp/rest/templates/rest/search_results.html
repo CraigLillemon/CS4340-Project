@@ -5,43 +5,41 @@
     <meta name="viewport" content="width=device-width, intial-scale=0.i5">
     <title>Search Results for {{cityname}}</title>
     <link rel="stylesheet" href="{% static 'rest/search_results.css' %}">
-    <h1>
-        Here is page {{pagenum}} of results for {{citystring}}.
-    </h1>
-    <h2>
-        Showing {{results}} results, ({{results_hidden}} hidden based on your preferences)
-    </h2>
 </head>
 <body>
     <form action="/search/results" method="get">
         <label for="city">City to Search:</label><br>
-        <input type="text" name="city" class="form-control" value="{{citystring}}" required><br>
+        <input type="text" name="city" id="cityinput" class="form-control" value="{{citystring}}" required><br>
 
-        <input type="radio" id="vegetarian" name="diet_restrict" value="10665" {{checked.10665}}>
-        <label for="vegetarian">Vegetarian</label><br>
+        <label for="diet_restricts">Diet:</label><br>
+        <select name="diet_restrict" id="diet_restricts">
+            <option value="0" {{checked.0}}>N/A</option>
+            <option value="10992" {{checked.10992}}>Gluten Free</option>
+            <option value="10665" {{checked.10665}}>Vegetarian</option>
+            <option value="10697" {{checked.10697}}>Vegan</option>
+          </select><br>
 
-        <input type="radio" id="vegan" name="diet_restrict" value="10697" {{checked.10697}}>
-        <label for="vegan">Vegan</label><br>
+        <button type="submit" class="btn" name="page" value="1">Search</button><br>
 
-        <input type="radio" id="gluten_free" name="diet_restrict" value="10992" {{checked.10992}}>
-        <label for="gluten_free">Gluten Free</label><br>
+        <h1>
+            Here is page {{pagenum}} of results for {{citystring}}.
+        </h1>
+        <h2>
+            Showing {{results}} results, ({{results_hidden}} hidden based on your preferences)
+        </h2>
 
-        <input type="radio" id="none_diet" name="diet_restrict" value="0" {{checked.0}}>
-        <label for="none_diet">N/A</label><br>
-
-        <label for="page">Page Number:</label><br>
-        <input type="number" name="page" min="1" class="form-control" value="{{pagenum}}" required><br>
-
-        <button type="submit" class="btn">Search</button>
+        <button type="submit" class="btn" name="page" value="{{prevpage}}">Previous Page</button>
+        <button type="submit" class="btn" name="page" value="{{nextpage}}">Next Page</button>
     </form>
+
     <form action="/search/results/business" method="get">
-        <ul>
-            {% for business in business_list %}
-            <li>
-                <p>{{business.name}}</p>
-                <button type="submit" class="btn" name="business_id" value="{{business.id}}">View this business</button>
-            </li>
-            {% endfor %}
-        </ul>
+        {% for business in business_list %}
+        <div id="resultdiv">
+        <h2 id="businesstitle">#{{business.ranking}}:</h2><br>
+        <h2 id="businesstitle">{{business.name}}</h2>
+        <h3 id="businesstitle">({{business.notes}} notes)</h3>
+        <button type="submit" class="btn" name="business_id" value="{{business.id}}">View this business</button>
+        </div>
+        {% endfor %}
     </form>
 </body>

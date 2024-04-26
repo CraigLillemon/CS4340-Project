@@ -1,9 +1,68 @@
-<!DOCTYPE html>
-<head>
-    <h1>
-        Welcome to the home page!
-    </h1>
-    <p>Take me to the <a href="/signin">sign-in page</a></p>
-    <p>Take me to the <a href="/signup">sign-up page</a></p>
-    <p>Take me to the <a href="/search">search page</a></p>
-</head>
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=0.i5">
+    <link rel="stylesheet" href="{% static 'rest/home.css' %}">
+  </head>
+  
+    <header>
+      <div id="headerHP">
+        <div id="siteLogo">
+          <img src="{% static 'rest/siteLogo.png' %}"/>
+        </div>
+        <h1>Nourish Navigator</h1>
+        <nav>
+          <ul>
+            <li id="navLink1" class="active">
+              <a href="/">Home</a>
+            </li>
+            <li id="navLink2">
+              <a href="/search">Search</a>
+            </li>
+            <li id="navLink3">
+              <a href="/signin">Sign In</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+
+  <body>
+    <div id="headerImage">
+      <p>.<br /><br /><br /><br /><br /><br /></p>
+      <img src="{% static 'rest/headerBanner.png' %}">
+    </div>
+    <h2><br />Our Goal and Promise to You!<br /><br /></h2>
+    <p id="ourGoals"><br />Nourish Navigator is a webapp designed to help users with unique dietary restrictions find nearby restaurants in their city that can cater to their dietary needs. Food allergies, health concerns, religious restrictions, or personal preference... Nourish Navigator supports them all! Powered by an extensive, global database, with Nourish Navigator you'll never miss out on finding great new restaurants that fit your dietary needs again!<br /><br /></p>
+
+    <h3><br />&ensp; Supported Dietary Restrictions<br /><br /></h3>
+    <div id="buttonWrapper">
+      <p id="suppDiet"><br /><br />&emsp; Vegetarian<br />&emsp; Vegan<br />&emsp; Celiac<br />&emsp; Lactose-Intolerant<br />&emsp; Paleo<br />&emsp; Low-Cholesterol<br />&emsp; Common Food Allergies<br />&emsp; Halal<br />&emsp; Kosher<br />&emsp; and more!<br /><br /></p>
+      <button onclick="window.location.href = '/search';"><br />Search Restaurants Now!<br /><br /></button>
+    </div>
+    
+    <h3><br />&ensp; User Testimonials<br /><br /></h3>
+    <div id="userTest">
+      <div id="stockUser1">
+        <img src="{% static 'rest/stockUser1.png' %}">
+        <p>Being a vegan can be tough in the springs. Luckily Nourish Navigator is there to help me scope out new restaurants that fit my dietary needs, regardless of their cuisine!</p>
+      </div>
+      <div id="stockUser2">
+        <p>Nourish Navigator is a godsend. It supports my religious dietary restrictions by filtering only what I can eat. Now I can find new restaurants with Halal food options almost instantly!</p>
+        <img src="{% static 'rest/stockUser2.png' %}">
+      </div>
+      <div id="stockUser3">
+        <img src="{% static 'rest/stockUser3.png' %}">
+        <p>There's not too many restaurants with vegetarian food options on the road, but if there are Nourish Navigator can find them. This app has given me back the power to eat healthy again!</p>
+      </div>
+    </div>
+  </body>
+
+  <footer>
+    <p>Developed By: Errick D, Nicholas G, and Anthony L.<br />Developed For: CS3110 Programming the Mobile Web.</p> 
+  </footer>
+
+</html>

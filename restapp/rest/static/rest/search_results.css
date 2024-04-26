@@ -7,49 +7,96 @@ font-family: "Poppins", sans-serif;
 body {
 background-color: antiquewhite;
 align-items: center;
+text-align: center;
 }
-h1, h2 {
+h1, h2, h3 {
 text-align: center;
 color: darkolivegreen;
 }
-input {
-width: 100%;
-height: 100%;
-border: none;
-outline: none;
-border: 2px solid darkolivegreen;
-border-radius: 40px;
-font-size: 16px;
-background-color: antiquewhite;
-color: darkolivegreen;
-font-size: 25px;
-padding: 20px 45px 20px 20px;
+#cityinput {
+    width: 50%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border: 2px solid darkolivegreen;
+    border-radius: 40px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    color: darkolivegreen;
+    font-size: 25px;
+    padding: 1% 1%;
+    margin: 0% 1% 1%;
 }
+#pagenuminput {
+    width: 5%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border: 2px solid darkolivegreen;
+    border-radius: 40px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    color: darkolivegreen;
+    font-size: 25px;
+    text-align: center;
+    padding: 1% 1%;
+    margin: 0% 1% 1%;
+    }
 label {
-font-size: 30px;
-justify-content: center;
-text-align: center;
-color: darkolivegreen;
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+    color: darkolivegreen;
+    padding: 1% 1% 0%;
+    margin: 1% 1% 0%;
 }
 button {
-width: 50%;
-background: darkolivegreen;
-border: none;
-outline: none;
-border-radius: 40px;
-box-shadow: 0 0 10px black;
-font-size: 16px;
-color: antiquewhite;
-font-weight: 600;
+    width: 40%;
+    background: darkolivegreen;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px black;
+    font-size: 16px;
+    color: antiquewhite;
+    font-weight: 600;
+    padding: 1% 1%;
+    margin: 1% 1%;
 }
-ul {
-width:100%;
-border: none;
-outline: none;
-border: 2px solid darkolivegreen;
-border-radius: 40px;
-font-size: 16px;
-background-color: antiquewhite;
-color: darkolivegreen;
-padding: 20px 45px 20px 20px;
+select{
+    width: 25%;
+    background: darkolivegreen;
+    background-color: antiquewhite;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px black;
+    font-size: 16px;
+    color: darkolivegreen;
+    font-weight: 600;
+    text-align: center;
+    padding: 1% 1%;
+    margin: 0% 1% 1%;
+}
+
+#resultdiv {
+    align-content: center;
+    width:90%;
+    transform: translateX(5%);
+    border: none;
+    outline: none;
+    border: 2px solid darkolivegreen;
+    border-radius: 40px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    color: darkolivegreen;
+    padding: 1% 1%;
+    margin: 0.5% 0.5%;
+}
+
+#businesstitle {
+    text-align: center;
+    color: darkolivegreen;
+    padding: 0% 0%;
+    margin: 0% 0%;
 }

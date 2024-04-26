@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils import timezone
+from .models import Note
 import requests
 
 # Create your views here.
@@ -73,14 +75,22 @@ def search_results(request):
         for diet in api_response['results']['data'][i]['dietary_restrictions']:
             diets.append(diet)
 
+        numnotes = str(len(Note.objects.filter(business_id=int(api_response['results']['data'][i]['location_id']))))
+
         if diet_choice == '0':
             businesses.append({'name' : api_response['results']['data'][i]['name'], 
-                               'id' : api_response['results']['data'][i]['location_id']})
+                               'id' : api_response['results']['data'][i]['location_id'],
+                               'ranking' : api_response['results']['data'][i]['ranking_position'],
+                               'notes' : numnotes
+                               })
         else:
             for diet in diets:
                 if diet_choice == diet['key']:
                     businesses.append({'name' : api_response['results']['data'][i]['name'], 
-                                       'id' : api_response['results']['data'][i]['location_id']})
+                                       'id' : api_response['results']['data'][i]['location_id'],
+                                       'ranking' : api_response['results']['data'][i]['ranking_position'],
+                                       'notes' : numnotes
+                                       })
     
     # select the diet to check by default
     default_checked = {
@@ -89,11 +99,13 @@ def search_results(request):
         '10992' : '',
         '0' : ''
     }
-    default_checked[diet_choice] = 'checked'
+    default_checked[diet_choice] = 'selected'
 
     # send HTML context
     context = {
         'pagenum' : pagenum,
+        'nextpage' : str(int(pagenum) + 1),
+        'prevpage' : str(max(1, int(pagenum) - 1)),
         'citystring' : city_string,
         'cityname' : city_name,
         'business_list' : businesses,
@@ -104,8 +116,13 @@ def search_results(request):
 
     return render(request, "rest/search_results.html", context)
 
+
+
 def view_business(request):
-    location_id = request.GET['business_id']
+    if request.method == 'GET':
+        location_id = request.GET['business_id']
+    elif request.method == 'POST':
+        location_id = request.POST['business_id']
 
     api_url = "https://restaurants222.p.rapidapi.com/detail"
     api_payload = {
@@ -134,5 +151,16 @@ def view_business(request):
     context = {
         'business' : business
     }
+
+    if request.method == 'POST':
+        newnote = Note(business_id=int(location_id), note_text=request.POST['note_text'], note_publisher="Anonymous", note_pub_date=timezone.now())
+        newnote.save()
+
+    noteslist = Note.objects.order_by("-note_pub_date").filter(business_id=str(location_id))[:20]
+
+    if len(noteslist) == 0:
+        context.update({'err_nonotes' : 'error'})
+
+    context.update({'notes': noteslist})
 
     return render(request, "rest/business.html", context)
