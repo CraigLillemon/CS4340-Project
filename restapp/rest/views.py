@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from .models import Note
 import requests
+import time
 
 # Create your views here.
 def nav_home(request):
@@ -34,12 +35,24 @@ def search_results(request):
         "X-RapidAPI-Key": "5b50f152a6mshc0ecd677d4f5b6ap1d7c6ajsna7b84abf99ea",
         "X-RapidAPI-Host": "restaurants222.p.rapidapi.com"
     }
+    next_request = time.time() + 1
     api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
+    while not 'status' in api_response:
+        if time.time() > next_request:
+            next_request = time.time() + 1
+            print("Bad request, trying again...")
+            api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
+
+    if not 'results' in api_response:
+        context = {
+            'error_badcall' : citychoice
+        }
+        return render(request, "rest/search.html", context)
 
     # if we don't find any results for the provided city,
     if len(api_response['results']['data']) == 0:
         context = {
-            'error_msg' : citychoice
+            'error_nocity' : citychoice
         }
         return render(request, "rest/search.html", context)
         
@@ -63,9 +76,19 @@ def search_results(request):
     }
     
     # check if we got a bad response, and try again
-    api_response = []
+    next_request = time.time() + 1
+    api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
     while not 'status' in api_response:
-        api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
+        if time.time() > next_request:
+            next_request = time.time() + 1
+            print("Bad request, trying again...")
+            api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
+
+    if not 'results' in api_response:
+        context = {
+            'error_badcall' : citychoice
+        }
+        return render(request, "rest/search.html", context)
 
     businesses = []
 
@@ -135,7 +158,13 @@ def view_business(request):
         "X-RapidAPI-Key": "5b50f152a6mshc0ecd677d4f5b6ap1d7c6ajsna7b84abf99ea",
         "X-RapidAPI-Host": "restaurants222.p.rapidapi.com"
     }
+    next_request = time.time() + 1
     api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
+    while not 'status' in api_response:
+        if time.time() > next_request:
+            next_request = time.time() + 1
+            print("Bad request, trying again...")
+            api_response = (requests.post(api_url, data=api_payload, headers=api_headers)).json()
 
     diet_restricts = []
     for i in range(len(api_response['results']['dietary_restrictions'])):

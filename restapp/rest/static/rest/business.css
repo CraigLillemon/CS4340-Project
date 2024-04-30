@@ -1,0 +1,64 @@
+@import
+url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+*{
+box-sizing: border-box;
+font-family: "Poppins", sans-serif;
+}
+body {
+background-color: antiquewhite;
+align-items: center;
+text-align: center;
+}
+h1, h2, h3 {
+text-align: center;
+color: darkolivegreen;
+}
+#noteinput {
+    width: 50%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border: 2px solid darkolivegreen;
+    border-radius: 40px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    color: darkolivegreen;
+    font-size: 25px;
+    padding: 1% 1%;
+    margin: 0% 1% 1%;
+}
+label {
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+    color: darkolivegreen;
+}
+button {
+    width: 40%;
+    background: darkolivegreen;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px black;
+    font-size: 16px;
+    color: antiquewhite;
+    font-weight: 600;
+    padding: 1% 1%;
+    margin: 1% 1%;
+}
+
+#notediv {
+    align-content: center;
+    font-size: 5%;
+    width:90%;
+    transform: translateX(5%);
+    border: none;
+    outline: none;
+    border: 2px solid darkolivegreen;
+    border-radius: 40px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    color: darkolivegreen;
+    padding: 1% 1%;
+    margin: 0.5% 0.5%;
+}

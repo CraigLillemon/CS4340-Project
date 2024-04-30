@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=0.i5">
+    <title>Search Results for {{cityname}}</title>
+    <link rel="stylesheet" href="{% static 'rest/business.css' %}">
     <h1>
         Here is the page for {{business.name}}
     </h1>
@@ -12,35 +17,34 @@
     <h3>
         This business has the following dietary options available:
     </h3>
-    <ul>
         {% for diet in business.diets %}
-        <li>
-            {{diet}}
-        </li>
+        <p>{{diet}}</p>
         {% endfor %}
-    </ul>
 
     <form action="/search/results/business?business_id={{business.id}}", method="post">
         {% csrf_token %}
         <input type="hidden" name="business_id" value={{business.id}} />
 
-        <input type="text" placeholder="Text for your note" name="note_text" class="form-control" required><br>
+        <input type="textarea" placeholder="Text for your note" name="note_text" id="noteinput" class="form-control" rows="4" required><br>
 
         <button type="submit" class="btn">Post</button>
     </form>
 
     <h1>Community Notes:</h1>
-    <form action="/search/results/business?business_id={{business.id}}", method="get">
-        <input type="hidden" name="business_id" value={{business.id}} />
-        <button type="submit" class="btn">Refresh</button>
-    </form>
 
     {% if err_nonotes %}
         <h2>It seems nobody has posted any notes for this business yet...</h2>
     {% endif %}
-    
+
     {% for note in notes %}
-        <h3>{{note.note_publisher}} posted at {{note.note_pub_date}} GMT:</h3><br>
+    <div id="notediv">
+        <h3>{{note.note_publisher}} posted at {{note.note_pub_date}} UTC:</h3><br>
         <p>{{note.note_text}}</p>
+    </div>
     {% endfor %}
+
+    <form action="/search/results/business?business_id={{business.id}}", method="get">
+        <input type="hidden" name="business_id" value={{business.id}} />
+        <button type="submit" class="btn">Refresh</button>
+    </form>
 </body>
