@@ -1,2 +1,2 @@
-# CS3110-Proj
- Group Project CS3110 Programming the Mobile Web
+# CS4340
+ Group Project CS4340
