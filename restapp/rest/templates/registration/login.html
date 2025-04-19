@@ -9,25 +9,43 @@
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+
+{% csrf_token %}
 <div class="wrapper">
 <form action="">
 <h1>Login</h1>
-<h1>(coming soon!)</h1>
+
+
+<h2>Username:</h2>
 <div class="input-box">
-<input type="text" placeholder="Username" required>
+
+<p>{{ form.username }}</p>
 </div>
+<h2> Password:</h2>
 <div class="input-box">
-<input type="password" placeholder="Password" required>
+    
+    <p>{{ form.password }}</p>
 </div>
 <div class="remember-forgot">
-<label><input type="checkbox"> Remember me </label>
-<a href="#">Forgot Password?</a>
+
 </div>
-<button type="submit" class="btn">Login</button>
+<input type="submit" value="Login" id="submit" class="btn btn-primary">
+
 <div class="register-link">
-<p>Don't have an account? <a href="/signup">Register</a></p>
+<p>Don't have an account? <a href={% url 'register_page' %}>Register</a></p>
 <p>Take me back <a href="/">Home</a></p>
 </div>
+<input type="hidden" name="next" value="{{ next }}">
 </form>
 </div>
 </body>

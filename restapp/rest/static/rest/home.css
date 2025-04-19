@@ -119,6 +119,11 @@ button{
   background-color: #f2d675;
 }
 
+.logout_link
+{
+  text-align: left;
+}
+
 #userTest{
   display: inline-flex;
   justify-content: center;

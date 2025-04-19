@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, intial-scale=0.i5">
+<title>Restaurant Logout Form</title>
+<link rel="stylesheet" href="{% static 'rest/signup.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="center">
+          <h1>Logged out!</h1>
+          
+          <h1><a href="{% url 'login' %}?next={% url 'home' %}">Click here to login again.</a></h1>
+        </div>
+    </div>
+
+</body>
+</html>

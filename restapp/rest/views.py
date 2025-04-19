@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils import timezone
 from .models import Note
+from .forms import *
 import requests
 import time
 
@@ -12,8 +13,20 @@ def nav_home(request):
 def nav_signup(request):
     return render(request, "rest/signup.html")
 
-def nav_signin(request):
-    return render(request, "rest/signin.html")
+def register(request):
+    form = CreateUserForm(request.POST)
+    if form.is_valid():
+        user = form.save()
+        
+        group = Group.objects.get(name='foodie')
+        user.groups.add(group)
+        #user = User.objects.create(user=user)
+        user.save()
+        return redirect('/accounts/login/?next=/')
+    context={'form':form}
+        
+    return render(request, 'registration/register.html', context)
+
 
 def nav_search(request):
     return render(request, "rest/search.html")
