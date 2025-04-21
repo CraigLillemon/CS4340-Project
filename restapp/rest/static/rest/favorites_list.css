@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+}
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+	background-color: #edfaef;
+}
+#headerHP {
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	background-color: #edfaef;
+}
+#siteLogo img {
+	width: 50%;
+	height: 50%;
+	object-fit: contain;
+	border-style: solid;
+	border-width: 7px;
+	border-color: #edfaef;
+}
+nav {
+	font-family: 'Roboto', sans-serif;
+	color: black;
+}
+#navLink1, #navLink2, #navLink3, #navLink4 {
+	display: inline-block;
+}
+#headerImage img {
+	width: 100%;
+	margin-bottom: 2%;
+	padding: none;
+}
+body {
+	background-color: antiquewhite;
+	align-items: center;
+	text-align: center;
+	padding-top: 125px;
+}
+h1, h2, h3, h4 {
+	text-align: center;
+	color: darkolivegreen;
+}
+button {
+	width: 40%;
+	background: darkolivegreen;
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	box-shadow: 0 0 10px black;
+	font-size: 16px;
+	color: antiquewhite;
+	font-weight: 600;
+	padding: 1% 1%;
+	margin: 1% 1%;
+}
+#favoritedRest {
+	align-content: center;
+	width: 90%;
+	transform: translateX(5%);
+	border: none;
+	outline: none;
+	border: 2px solid darkolivegreen;
+	border-radius: 40px;
+	font-size: 16px;
+	background-color: antiquewhite;
+	color: darkolivegreen;
+	padding: 1% 1%;
+	margin: 0.5% 0.5%;
+}
+#restDetails {
+	text-align: center;
+	color: darkolivegreen;
+	padding: 0% 0%;
+	margin: 0% 0%;
+}
+#fakeButton {
+	width: 40%;
+	background: darkolivegreen;
+	border: black;
+	outline: none;
+	border-radius: 40px;
+	box-shadow: 0 0 10px black;
+	font-size: 16px;
+	color: antiquewhite;
+	font-weight: 600;
+	padding: 1% 1%;
+	margin: 1% 1%;
+}
+#ratingContainer {
+	display: flex;
+	justify-content: center;
+	gap: 40px;
+	margin-bottom: 10px;
+}
+#ratingBox {
+	flex: 0 0 auto;
+	text-align: center;
+}
+@media (max-width: 600px) {
+	.rating-container {
+		flex-direction: column;
+		align-items: center;
+	}
+}

@@ -3,9 +3,13 @@ html {
   margin-top: 0%;
 }
 
-header{
-  position: fixed;
-  width: 100%;
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; /* Ensure it's in front */
+    background-color: #edfaef;
 }
 
 #headerHP{
@@ -34,16 +38,8 @@ nav{
   color: black;
 }
 
-#navLink1{
-  display: inline-block;
-}
-
-#navLink2{
-  display: inline-block;
-}
-
-#navLink3{
-  display: inline-block;
+#navLink1, #navLink2, #navLink3, #navLink4 {
+    display: inline-block;
 }
 
 #headerImage img{
@@ -117,11 +113,6 @@ button{
   border-width: 5px;
   border-color: black;
   background-color: #f2d675;
-}
-
-.logout_link
-{
-  text-align: left;
 }
 
 #userTest{
