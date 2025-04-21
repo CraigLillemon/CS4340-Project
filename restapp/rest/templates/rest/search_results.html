@@ -6,6 +6,39 @@
     <title>Search Results for {{cityname}}</title>
     <link rel="stylesheet" href="{% static 'rest/search_results.css' %}">
 </head>
+
+<header>
+    <div id="headerHP">
+        <div id="siteLogo">
+            <img src="{% static 'rest/siteLogo.png' %}" />
+        </div>
+        <h1>Nourish Navigator</h1>
+        <nav>
+            <ul id="navMenu">
+                <li id="navLink1">
+                    <a href="/">Home</a>
+                </li>
+                <li id="navLink2">
+                    <a href="/search">Search</a>
+                </li>
+                <li id="navLink3">
+                    <a href="/favorites/list">Favorites</a>
+                </li>
+                <li id="navLink4">
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="all : unset; color: #0d6efd; ">Logout {{ user }}</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Sign In</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
 <body>
     <form action="/search/results" method="get">
         <label for="city">City to Search:</label><br>

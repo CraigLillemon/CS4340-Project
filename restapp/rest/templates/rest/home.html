@@ -1,80 +1,79 @@
 <!DOCTYPE HTML>
 {% load static %}
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, intial-scale=0.i5">
     <link rel="stylesheet" href="{% static 'rest/home.css' %}">
-  </head>
-  
-    <header>
-      <div id="headerHP">
+</head>
+
+<header>
+    <div id="headerHP">
         <div id="siteLogo">
-          <img src="{% static 'rest/siteLogo.png' %}"/>
+            <img src="{% static 'rest/siteLogo.png' %}" />
         </div>
         <h1>Nourish Navigator</h1>
         <nav>
-          <ul>
-            <li id="navLink1" class="active">
-              <a href="/">Home</a>
-            </li>
-            <li id="navLink2">
-              <a href="/search">Search</a>
-            </li>
-            <li id="navLink3">
-            {% if user.is_authenticated %}
-              
-            <form method="POST" action="{% url 'logout' %}">
-              {% csrf_token %}
-              <button type="submit" class="nav-link" style = "all : unset; color: #0d6efd; ">Logout {{ user }}</button>
-            </form>
-            
-            {% else %}
-            
-              <a href="{% url 'login' %}?next={{ request.path }}">Sign In</a>
-            
-            {% endif %}
-
-            </li>
-          </ul>
+            <ul id="navMenu">
+                <li id="navLink1" class="active">
+                    <a href="/">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li id="navLink2">
+                    <a href="/search">Search</a>
+                </li>
+                <li id="navLink3">
+                    <a href="/favorites/list">Favorites</a>
+                </li>
+                {% endif %}
+                <li id="navLink4">
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="all : unset; color: #0d6efd; ">Logout {{ user }}</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Sign In</a>
+                    {% endif %}
+                </li>
+            </ul>
         </nav>
-      </div>
-    </header>
+    </div>
+</header>
 
-
-  <body>
+<body>
     <div id="headerImage">
-      <p>.<br /><br /><br /><br /><br /><br /></p>
-      <img src="{% static 'rest/headerBanner.png' %}">
+        <p>.<br /><br /><br /><br /><br /><br /></p>
+        <img src="{% static 'rest/headerBanner.png' %}">
     </div>
     <h2><br />Our Goal and Promise to You!<br /><br /></h2>
     <p id="ourGoals"><br />Nourish Navigator is a webapp designed to help users with unique dietary restrictions find nearby restaurants in their city that can cater to their dietary needs. Food allergies, health concerns, religious restrictions, or personal preference... Nourish Navigator supports them all! Powered by an extensive, global database, with Nourish Navigator you'll never miss out on finding great new restaurants that fit your dietary needs again!<br /><br /></p>
 
     <h3><br />&ensp; Supported Dietary Restrictions<br /><br /></h3>
     <div id="buttonWrapper">
-      <p id="suppDiet"><br /><br />&emsp; Vegetarian<br />&emsp; Vegan<br />&emsp; Gluten-Free<br />&emsp; Lactose-Intolerant (coming soon!)<br />&emsp; Paleo (coming soon!)<br />&emsp; Low-Cholesterol (coming soon!)<br />&emsp; Common Food Allergies (coming soon!)<br />&emsp; Halal (coming soon!)<br />&emsp; Kosher (coming soon!)<br />&emsp; and more! (maybe!)<br /><br /></p>
-      <button onclick="window.location.href = '/search';"><br />Search Restaurants Now!<br /><br /></button>
+        <p id="suppDiet"><br /><br />&emsp; Vegetarian<br />&emsp; Vegan<br />&emsp; Gluten-Free<br />&emsp; Lactose-Intolerant (coming soon!)<br />&emsp; Paleo (coming soon!)<br />&emsp; Low-Cholesterol (coming soon!)<br />&emsp; Common Food Allergies (coming soon!)<br />&emsp; Halal (coming soon!)<br />&emsp; Kosher (coming soon!)<br />&emsp; and more! (maybe!)<br /><br /></p>
+        <button onclick="window.location.href = '/search';"><br />Search Restaurants Now!<br /><br /></button>
     </div>
-    
+
     <h3><br />&ensp; User Testimonials<br /><br /></h3>
     <div id="userTest">
-      <div id="stockUser1">
-        <img src="{% static 'rest/stockUser1.png' %}">
-        <p>Being a vegan can be tough in the springs. Luckily Nourish Navigator is there to help me scope out new restaurants that fit my dietary needs, regardless of their cuisine!</p>
-      </div>
-      <div id="stockUser2">
-        <p>Nourish Navigator is a godsend. It supports my religious dietary restrictions by filtering only what I can eat. Now I can find new restaurants with Halal food options almost instantly!</p>
-        <img src="{% static 'rest/stockUser2.png' %}">
-      </div>
-      <div id="stockUser3">
-        <img src="{% static 'rest/stockUser3.png' %}">
-        <p>There's not too many restaurants with vegetarian food options on the road, but if there are Nourish Navigator can find them. This app has given me back the power to eat healthy again!</p>
-      </div>
+        <div id="stockUser1">
+            <img src="{% static 'rest/stockUser1.png' %}">
+            <p>Being a vegan can be tough in the springs. Luckily Nourish Navigator is there to help me scope out new restaurants that fit my dietary needs, regardless of their cuisine!</p>
+        </div>
+        <div id="stockUser2">
+            <p>Nourish Navigator is a godsend. It supports my religious dietary restrictions by filtering only what I can eat. Now I can find new restaurants with Halal food options almost instantly!</p>
+            <img src="{% static 'rest/stockUser2.png' %}">
+        </div>
+        <div id="stockUser3">
+            <img src="{% static 'rest/stockUser3.png' %}">
+            <p>There's not too many restaurants with vegetarian food options on the road, but if there are Nourish Navigator can find them. This app has given me back the power to eat healthy again!</p>
+        </div>
     </div>
-  </body>
+</body>
 
-  <footer>
-    <p>Developed By: Errick D, Nicholas G, and Anthony L.<br />Developed For: CS3110 Programming the Mobile Web.</p> 
-  </footer>
+<footer>
+    <p>Extended By: Anthony L. & Craig L.<br />Extended For: CS4340 Software Maintenance.</p>
+</footer>
 
 </html>

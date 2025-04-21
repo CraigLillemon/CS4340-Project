@@ -3,25 +3,67 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, intial-scale=0.i5">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Search Results for {{cityname}}</title>
     <link rel="stylesheet" href="{% static 'rest/business.css' %}">
+</head>
+
+<header>
+    <div id="headerHP">
+        <div id="siteLogo">
+            <img src="{% static 'rest/siteLogo.png' %}" />
+        </div>
+        <h1>Nourish Navigator</h1>
+        <nav>
+            <ul id="navMenu">
+                <li id="navLink1">
+                    <a href="/">Home</a>
+                </li>
+                <li id="navLink2">
+                    <a href="/search">Search</a>
+                </li>
+                <li id="navLink3">
+                    <a href="/favorites/list">Favorites</a>
+                </li>
+                <li id="navLink4">
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="all : unset; color: #0d6efd; ">Logout {{ user }}</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Sign In</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<body>
     <h1>
         Here is the page for {{business.name}}
     </h1>
     <h2>
         Location: {{business.address}}
     </h2>
-    <a href="https://www.google.com/maps/search/{{business.name}} {{business.address}}" target='_blank' rel='noopener noreferrer'>Find on Google Maps</a> 
-</head>
-<body>
+    <a href="https://www.google.com/maps/search/{{business.name}} {{business.address}}" target='_blank' rel='noopener noreferrer'>Find on Google Maps</a>
     <h3>
         This business has the following dietary options available:
     </h3>
-        {% for diet in business.diets %}
-        <p>{{diet}}</p>
-        {% endfor %}
+    {% for diet in business.diets %}
+    <p>{{diet}}</p>
+    {% endfor %}
+    <button id="favorite-btn" onclick="toggleFavorite(this, '{{ business.id }}', '{{ business.name|escapejs }}', '{{ business.address|escapejs }}', {{ business.diets|safe }})">
+        {% if is_favorited %}
+        Remove from Favorites?
+        {% else %}
+        Add to Favorites?
+        {% endif %}
+    </button>
+    <h3></h3>
 
-    <form action="/search/results/business?business_id={{business.id}}", method="post">
+    <form action="/search/results/business?business_id={{business.id}}" , method="post">
         {% csrf_token %}
         <input type="hidden" name="business_id" value={{business.id}} />
 
@@ -33,7 +75,7 @@
     <h1>Community Notes:</h1>
 
     {% if err_nonotes %}
-        <h2>It seems nobody has posted any notes for this business yet...</h2>
+    <h2>It seems nobody has posted any notes for this business yet...</h2>
     {% endif %}
 
     {% for note in notes %}
@@ -43,8 +85,79 @@
     </div>
     {% endfor %}
 
-    <form action="/search/results/business?business_id={{business.id}}", method="get">
+    <form action="/search/results/business?business_id={{business.id}}" , method="get">
         <input type="hidden" name="business_id" value={{business.id}} />
         <button type="submit" class="btn">Refresh</button>
     </form>
 </body>
+
+<script>
+    function toggleFavorite(button, businessId, name, address, diets) {
+        const isAdding = button.innerText.includes("Add");
+
+        const restaurantData = {
+            business_id: businessId,
+            name: name,
+            address: address,
+            diets: diets
+        };
+
+        if (isAdding) {
+            fetch('/favorites/restaurant/create_internal/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify(restaurantData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        return fetch(`/favorites/toggle/${businessId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: JSON.stringify({ restaurant_id: businessId })
+                        });
+                    } else {
+                        throw new Error("Failed to create restaurant");
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        button.innerText = "Remove from Favorites?";
+                    } else {
+                        alert("Failed to favorite restaurant.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } else {
+            fetch(`/favorites/toggle/${businessId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({ restaurant_id: businessId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        button.innerText = "Add to Favorites?";
+                    } else {
+                        alert("Failed to remove favorite.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+    }
+</script>

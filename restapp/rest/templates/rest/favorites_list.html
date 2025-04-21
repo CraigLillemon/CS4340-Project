@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<head>
+    {% load static %}
+    {% load custom_tags %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=0.i5">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Restaurant Favorites Page</title>
+    <link rel="stylesheet" href="{% static 'rest/favorites_list.css' %}">
+</head>
+
+<header>
+    <div id="headerHP">
+        <div id="siteLogo">
+            <img src="{% static 'rest/siteLogo.png' %}" />
+        </div>
+        <h1>Nourish Navigator</h1>
+        <nav>
+            <ul id="navMenu">
+                <li id="navLink1">
+                    <a href="/">Home</a>
+                </li>
+                <li id="navLink2">
+                    <a href="/search">Search</a>
+                </li>
+                <li id="navLink3" class="active">
+                    <a href="/favorites/list">Favorites</a>
+                </li>
+                <li id="navLink4">
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="all : unset; color: #0d6efd; ">Logout {{ user }}</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Sign In</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<body>
+    <h1>Welcome to your favorites page.</h1>
+    <br />
+    <h2>Here is your list of currently favorited restaurants!</h2>
+    {% for favorite in favorites %}
+    <div id="favoritedRest">
+        <h2 id="restDetails">{{ favorite.restaurant.name }}</h2>
+        <h3 id="restDetails">{{ favorite.restaurant.address }} </h3>
+        <br />
+        <h3 id="restDetails">Supported Diets: </h3>
+        {% for diet in favorite.restaurant.diets %}
+        <p id="restDetails">{{ diet }}</p>
+        {% empty %}
+        <p id="restDetails">This restaurant has none of our website's dietary options available.</p>
+        {% endfor %}
+        
+        <div id="ratingContainer">
+            <h3 id="ratingBox">
+                Personal Rating:
+                <span id="user-rating-{{ favorite.restaurant.business_id }}">
+                    {% get_rating_value ratings_data favorite.restaurant.business_id "user_rating" %}
+                </span>
+            </h3>
+            <h3 id="ratingBox">
+                Community Rating:
+                <span id="community-rating-{{ favorite.restaurant.business_id }}">
+                    {% get_rating_value ratings_data favorite.restaurant.business_id "community_avg" %}
+                </span>
+            </h3>
+        </div>
+        
+        <label for="rating-{{ favorite.restaurant.business_id }}">Rate this Restaurant (1–5):</label>
+        <select id="rating-{{ favorite.restaurant.business_id }}">
+            <option value="">Select</option>
+            {% for i in "12345" %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+        <br />
+        <button onclick="submitRating('{{ favorite.restaurant.business_id }}')">Submit New Rating?</button>
+
+        <h4></h4>
+
+        <button onclick="toggleFavorite('{{ favorite.restaurant.business_id }}')">Remove from Favorites?</button>
+    </div>
+    {% empty %}
+    <h3>Your favorites list is currently empty.</h3>
+    <br />
+    <h3><a id="fakeButton" href="/search">Return to Search?</a></h3>
+    {% endfor %}
+</body>
+
+<script>
+    function toggleFavorite(restaurantId) {
+        fetch(`/favorites/toggle/${restaurantId}/`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({ 'restaurant_id': restaurantId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function submitRating(restaurantId) {
+        const selectElement = document.getElementById(`rating-${restaurantId}`);
+        const score = selectElement.value;
+        if (!score) return;
+        fetch(`/favorites/rate/${restaurantId}/`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ score: score })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`user-rating-${restaurantId}`).innerText = data.new_score;
+                    document.getElementById(`community-rating-${restaurantId}`).innerText = data.new_average;
+                } else {
+                    alert("There was an issue saving your rating.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
