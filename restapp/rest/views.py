@@ -1,17 +1,18 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
-from .models import Note
+from django.db.models import Avg
+from .models import Note, Restaurant, Favorite, Rating
 from .forms import *
+from django.contrib.auth.decorators import login_required
 import requests
 import time
+import json
 
 # Create your views here.
 def nav_home(request):
     return render(request, "rest/home.html")
 
-def nav_signup(request):
-    return render(request, "rest/signup.html")
 
 def register(request):
     form = CreateUserForm(request.POST)
@@ -28,9 +29,12 @@ def register(request):
     return render(request, 'registration/register.html', context)
 
 
+@login_required
 def nav_search(request):
     return render(request, "rest/search.html")
 
+
+@login_required
 def search_results(request):
     # get request headers
     citychoice = request.GET['city']
@@ -153,7 +157,7 @@ def search_results(request):
     return render(request, "rest/search_results.html", context)
 
 
-
+@login_required
 def view_business(request):
     if request.method == 'GET':
         location_id = request.GET['business_id']
@@ -194,6 +198,9 @@ def view_business(request):
         'business' : business
     }
 
+    is_favorited = Favorite.objects.filter(user=request.user, restaurant__business_id=location_id).exists()
+    context.update({'is_favorited': is_favorited})
+
     if request.method == 'POST':
         newnote = Note(business_id=int(location_id), note_text=request.POST['note_text'], note_publisher="Anonymous", note_pub_date=timezone.now())
         newnote.save()
@@ -206,3 +213,85 @@ def view_business(request):
     context.update({'notes': noteslist})
 
     return render(request, "rest/business.html", context)
+
+
+@login_required
+def create_restaurant(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            business_id = data.get('business_id')
+            name = data.get('name')
+            address = data.get('address')
+            diets = data.get('diets')
+
+            # Check if the restaurant already exists internally.
+            restaurant, created = Restaurant.objects.get_or_create(
+                business_id=business_id,
+                defaults={'name': name, 'address': address, 'diets': diets}
+            )
+
+            return JsonResponse({'success': True, 'restaurant_id': restaurant.business_id})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+
+@login_required
+def toggle_favorite(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, business_id=restaurant_id)
+    favorite, created = Favorite.objects.get_or_create(user=request.user, restaurant=restaurant)
+    if not created:
+        favorite.delete()
+        return JsonResponse({'success': True, 'message': 'Removed restaurant from user\'s favorites list'})
+    else:
+        return JsonResponse({'success': True, 'message': 'Added restaurant to user\'s favorites list'})
+
+
+@login_required
+def favorites_list(request):
+    favorites = Favorite.objects.filter(user=request.user).select_related('restaurant')
+    ratings_data = {}
+
+    for favorite in favorites:
+        restaurant = favorite.restaurant
+        user_rating = Rating.objects.filter(user=request.user, restaurant=restaurant).first()
+        community_avg = Rating.objects.filter(restaurant=restaurant).aggregate(models.Avg('score'))['score__avg']
+
+        ratings_data[restaurant.business_id] = {
+            'user_rating': user_rating.score if user_rating else "Not yet rated",
+            'community_avg': round(community_avg, 1) if community_avg else "Not yet rated",
+        }
+
+    context = {
+        'favorites': favorites,
+        'ratings_data': ratings_data
+    }
+
+    return render(request, 'rest/favorites_list.html', context)
+
+
+@login_required
+def rate_restaurant(request, restaurant_id):
+    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        score = int(request.POST.get('score'))
+        restaurant = get_object_or_404(Restaurant, business_id=restaurant_id)
+
+        Rating.objects.update_or_create(
+            user=request.user,
+            restaurant=restaurant,
+            defaults={'score': score}
+        )
+
+        community_avg = Rating.objects.filter(restaurant=restaurant).aggregate(models.Avg('score'))['score__avg']
+        community_avg = round(community_avg, 1) if community_avg else "Not rated yet"
+
+        return JsonResponse({
+            'success': True,
+            'new_score': score,
+            'new_average': community_avg
+        })
+    
+    return JsonResponse({'success': False}, status=400)
