@@ -8,6 +8,7 @@ urlpatterns = [
     path("accounts/", include('django.contrib.auth.urls')),
     path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logged_out.html'), name='logout'),
     path('accounts/register/', views.register, name='register_page'),
+    path('food_ai/', views.chatbot, name = "food_ai"),
     path("search/", views.nav_search),
     path("search/results", views.search_results),
     path("search/results/business", views.view_business),

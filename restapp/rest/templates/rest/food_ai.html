@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=0.i5">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Search Results for {{cityname}}</title>
+    <link rel="stylesheet" href="{% static 'rest/business.css' %}">
+</head>
+<body>
+
+<h3>Write a prompt</h3>
+
+<form method = "post">
+{%csrf_token%}
+<input type = "text" name = "input">
+<button type = submit>submit</button>
+
+{% if ai_response%}
+
+{{ ai_response }}
+
+{%endif%}
+
+
+</form>
+
+
+</body>
+
+
+
+
+</html>

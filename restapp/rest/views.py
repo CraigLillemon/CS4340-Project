@@ -5,11 +5,33 @@ from django.db.models import Avg
 from .models import Note, Restaurant, Favorite, Rating
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 import requests
 import time
 import json
-
+import os
+import openai
+from openai import OpenAI
 # Create your views here.
+client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
+def chatbot(request):
+    ai_response = None
+    if request.method == 'POST':
+        user_input = request.POST.get('input')
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",  
+            messages=[
+                {"role": "user", "content": user_input}
+            ],
+            max_tokens=500,
+        )
+
+        print(response)
+        ai_response = response.choices[0].message.content.strip()
+    return render(request, 'rest/food_ai.html', {'ai_response': ai_response})
+
+
 def nav_home(request):
     return render(request, "rest/home.html")
 
