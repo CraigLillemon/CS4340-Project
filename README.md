@@ -32,5 +32,7 @@
 - Step 10:
 - Follow the link output to your terminal to access the development server on your preferred browser!
 
-Disclaimer1: To continue development on this software, you are free to fork and extend it under the attached MIT License, but do not attempt committing changes to this fork or main.
-Disclaimer2: In the event that RAPID API calls stop working as intended, visit "https://rapidapi.com/ptwebsolution/api/restaurants222" to create a free account and obtain a new key.
+# Disclaimer1:
+To continue development on this software, you are free to fork and extend it under the attached MIT License, but do not attempt committing changes to this fork or main.
+# Disclaimer2:
+In the event that RAPID API calls stop working as intended, visit "https://rapidapi.com/ptwebsolution/api/restaurants222" to create a free account and obtain a new key.
