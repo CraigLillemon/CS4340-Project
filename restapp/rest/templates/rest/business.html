@@ -26,6 +26,9 @@
                     <a href="/favorites/list">Favorites</a>
                 </li>
                 <li id="navLink4">
+                    <a href="/food_ai/">DishIngr</a>
+                </li>
+                <li id="navLink5">
                     {% if user.is_authenticated %}
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}

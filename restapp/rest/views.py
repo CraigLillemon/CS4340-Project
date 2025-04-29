@@ -12,16 +12,26 @@ import json
 import os
 import openai
 from openai import OpenAI
+
 # Create your views here.
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 def chatbot(request):
     ai_response = None
+    
+    system_prompt = (
+        "Repeat user input, then output a list of ingredients, one ingredient per line."
+        "Begin the list with 'Common Allergens:', followed by the 'Remaining Ingredients:'."
+        "If someone asks a non food related question, ask them to 'Please Enter a Dish:'"
+        
+    )
     if request.method == 'POST':
         user_input = request.POST.get('input')
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",  
             messages=[
+
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_input}
             ],
             max_tokens=500,
@@ -71,7 +81,7 @@ def search_results(request):
     }
     api_headers = {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "5b50f152a6mshc0ecd677d4f5b6ap1d7c6ajsna7b84abf99ea",
+        "X-RapidAPI-Key": "6ba6be2c9emshe7dc5b926dbe271p19c762jsn820589fa91c5",
         "X-RapidAPI-Host": "restaurants222.p.rapidapi.com"
     }
     next_request = time.time() + 1
@@ -110,7 +120,7 @@ def search_results(request):
     }
     api_headers = {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "5b50f152a6mshc0ecd677d4f5b6ap1d7c6ajsna7b84abf99ea",
+        "X-RapidAPI-Key": "6ba6be2c9emshe7dc5b926dbe271p19c762jsn820589fa91c5",
         "X-RapidAPI-Host": "restaurants222.p.rapidapi.com"
     }
     
@@ -194,7 +204,7 @@ def view_business(request):
     }
     api_headers = {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "5b50f152a6mshc0ecd677d4f5b6ap1d7c6ajsna7b84abf99ea",
+        "X-RapidAPI-Key": "6ba6be2c9emshe7dc5b926dbe271p19c762jsn820589fa91c5",
         "X-RapidAPI-Host": "restaurants222.p.rapidapi.com"
     }
     next_request = time.time() + 1

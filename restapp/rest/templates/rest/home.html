@@ -25,8 +25,11 @@
                 <li id="navLink3">
                     <a href="/favorites/list">Favorites</a>
                 </li>
-                {% endif %}
                 <li id="navLink4">
+                    <a href="/food_ai/">DishIngr</a>
+                </li>
+                {% endif %}
+                <li id="navLink5">
                     {% if user.is_authenticated %}
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}

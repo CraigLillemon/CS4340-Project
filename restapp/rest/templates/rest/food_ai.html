@@ -5,26 +5,65 @@
     <meta name="viewport" content="width=device-width, intial-scale=0.i5">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Search Results for {{cityname}}</title>
-    <link rel="stylesheet" href="{% static 'rest/business.css' %}">
+    <link rel="stylesheet" href="{% static 'rest/food_ai.css' %}">
 </head>
+
+<header>
+    <div id="headerHP">
+        <div id="siteLogo">
+            <img src="{% static 'rest/siteLogo.png' %}" />
+        </div>
+        <h1>Nourish Navigator</h1>
+        <nav>
+            <ul id="navMenu">
+                <li id="navLink1">
+                    <a href="/">Home</a>
+                </li>
+                <li id="navLink2" class="active">
+                    <a href="/search">Search</a>
+                </li>
+                <li id="navLink3">
+                    <a href="/favorites/list">Favorites</a>
+                </li>
+                <li id="navLink4">
+                    <a href="/food_ai/">DishIngr</a>
+                </li>
+                <li id="navLink5">
+                    {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link" style="all : unset; color: #0d6efd; ">Logout {{ user }}</button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Sign In</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
 <body>
+    <h1>Welcome to the <strong>Ingredients List</strong> page.</h1>
+    <h2>Enter a Dish below:</h2>
 
-<h3>Write a prompt</h3>
+    <form method="post">
+        {%csrf_token%}
+        <input type="text" name="input" id="input" required>
+        <button type=submit>submit</button>
+    </form>
 
-<form method = "post">
-{%csrf_token%}
-<input type = "text" name = "input">
-<button type = submit>submit</button>
+    <br />
 
-{% if ai_response%}
-
-{{ ai_response }}
-
-{%endif%}
-
-
-</form>
-
+    <div id="resultdiv">
+        {% if ai_response%}
+        {% for message in ai_response.splitlines %}
+        {% if message %}
+        <h3>{{message}}</h3>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
 
 </body>
 

@@ -1,8 +1,8 @@
-@import
-url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-*{
-box-sizing: border-box;
-font-family: "Poppins", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 header {
     position: fixed;
@@ -44,34 +44,17 @@ body {
     text-align: center;
     padding-top: 125px;
 }
-body {
-background-color: antiquewhite;
-align-items: center;
-text-align: center;
-}
 h1, h2, h3 {
-text-align: center;
-color: darkolivegreen;
-}
-#noteinput {
-    width: 90%;
-    height: 100%;
-    border: none;
-    outline: none;
-    border: 2px solid darkolivegreen;
-    border-radius: 40px;
-    font-size: 16px;
-    background-color: antiquewhite;
+    text-align: center;
     color: darkolivegreen;
-    font-size: 25px;
-    padding: 1% 1%;
-    margin: 0% 1% 1%;
 }
 label {
     font-size: 30px;
     justify-content: center;
     text-align: center;
     color: darkolivegreen;
+    padding: 1% 1% 0%;
+    margin: 1% 1% 0%;
 }
 button {
     width: 40%;
@@ -86,11 +69,23 @@ button {
     padding: 1% 1%;
     margin: 1% 1%;
 }
-
-#notediv {
+#input {
+    width: 90%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border: 2px solid darkolivegreen;
+    border-radius: 40px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    color: darkolivegreen;
+    font-size: 25px;
+    padding: 1% 1%;
+    margin: 0% 1% 1%;
+}
+#resultdiv {
     align-content: center;
-    font-size: 5%;
-    width:90%;
+    width: 90%;
     transform: translateX(5%);
     border: none;
     outline: none;

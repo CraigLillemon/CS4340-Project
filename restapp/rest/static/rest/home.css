@@ -1,8 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
 html {
   padding: 0%;
   margin-top: 0%;
 }
-
 header {
     position: fixed;
     top: 0;
@@ -11,15 +16,13 @@ header {
     z-index: 9999; /* Ensure it's in front */
     background-color: #edfaef;
 }
-
-#headerHP{
+#headerHP {
   display: flex;
   justify-content: left;
   align-items: center;
   background-color: #edfaef;
 }
-
-#siteLogo img{
+#siteLogo img {
   width: 50%;
   height: 50%;
   object-fit: contain;
@@ -27,29 +30,21 @@ header {
   border-width: 7px;
   border-color: #edfaef;
 }
-
-h1{
-  font-family: 'Roboto', sans-serif;
+h1 {
   color: #451313;
 }
-
-nav{
-  font-family: 'Roboto', sans-serif;
+nav {
   color: black;
 }
-
-#navLink1, #navLink2, #navLink3, #navLink4 {
+#navLink1, #navLink2, #navLink3, #navLink4, #navLink5 {
     display: inline-block;
 }
-
-#headerImage img{
+#headerImage img {
   width: 100%;
   margin-bottom: 2%;
   padding: none;
 }
-
-h2{
-  font-family: 'Roboto', sans-serif;
+h2 {
   color: black;
   text-align: center;
   background-color: #b8e6bf;
@@ -62,17 +57,13 @@ h2{
   margin-top: 0%;
   margin-bottom: 0%;
 }
-
-#ourGoals{
-  font-family: 'Roboto', sans-serif;
+#ourGoals {
   color: black;
   text-align: center;
   background-color: #facfd2;
   margin-top: 0%;
 }
-
-h3{
-  font-family: 'Roboto', sans-serif;
+h3 {
   color: black;
   text-align: left;
   background-color: #b8e6bf;
@@ -85,24 +76,20 @@ h3{
   margin-top: 0%;
   margin-bottom: 0%;
 }
-
-#buttonWrapper{
+#buttonWrapper {
   display: flex;
   justify-content: left;
   align-items: center;
-  font-family: 'Roboto', sans-serif;
   color: black;
   background-color: #facfd2;
   margin-top: 0%;
 }
-
-#suppDiet{
+#suppDiet {
   display: inline-block;
   text-align: left;
   width: 40%;
 }
-
-button{
+button {
   display: inline-block;
   text-align: center;
   width: 50%;
@@ -114,20 +101,17 @@ button{
   border-color: black;
   background-color: #f2d675;
 }
-
-#userTest{
+#userTest {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Roboto', sans-serif;
   color: black;
   background-color: #facfd2;
   max-width: 100%;
   margin-top: 0%;
   margin-bottom: 0%;
 }
-
-#stockUser1{
+#stockUser1 {
   display: inline-block;
   max-width: 30%;
   margin-left: 1.5%;
@@ -137,18 +121,15 @@ button{
   border-left-color: #b32d2e;
   text-align: left;
 }
-
-#stockUser1 img{
+#stockUser1 img {
   display: inline-block;
   max-width: 100%;
 }
-
-#stockUser1 p{
+#stockUser1 p {
   padding: 5px;
   margin: 0px;
 }
-
-#stockUser2{
+#stockUser2 {
   display: inline-block;
   max-width: 30%;
   margin-left: 1.5%;
@@ -158,18 +139,15 @@ button{
   border-left-color: #b32d2e;
   text-align: left;
 }
-
-#stockUser2 p{
+#stockUser2 p {
   padding: 5px;
   margin: 0px;
 }
-
-#stockUser2 img{
+#stockUser2 img {
   display: inline-block;
   max-width: 100%;
 }
-
-#stockUser3{
+#stockUser3 {
   display: inline-block;
   max-width: 30%;
   margin-left: 1.5%;
@@ -179,19 +157,15 @@ button{
   border-right-color: #b32d2e;
   text-align: right;
 }
-
-#stockUser3 img{
+#stockUser3 img {
   display: inline-block;
   max-width: 100%;
 }
-
-#stockUser3 p{
+#stockUser3 p {
   padding: 5px;
   margin: 0px;
 }
-
-footer{
-  font-family: 'Roboto', sans-serif;
+footer {
   color: black;
   text-align: center;
   background-color: #b8e6bf;
